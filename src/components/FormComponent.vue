@@ -56,15 +56,6 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-                <!-- <v-text-field
-                    name="loan_amount"
-                    :error-messages="errors.first('loan_amount')"
-                    v-validate="'required|numeric'"
-                    label="Importe prestamo"
-                    v-model="form.loan_amount"
-                    prefix="$"
-                >
-                </v-text-field> -->
                 <vuetify-money
                     v-validate="'required|max_value:1000|min_value:11'"
                     name="loan_amount"
@@ -81,13 +72,40 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-            <v-text-field
-                name="loan_date"
-                :error-messages="errors.first('loan_date')"
-                v-validate="'required'"
-                label="Fecha del préstamo"
-                v-model="form.loan_date"
-            ></v-text-field>
+                <!-- <v-text-field
+                    name="loan_date"
+                    :error-messages="errors.first('loan_date')"
+                    v-validate="'required'"
+                    label="Fecha del préstamo"
+                    v-model="form.loan_date"
+                ></v-text-field> -->
+                <v-menu
+                    v-model="loan_date_menu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="form.loan_date"
+                            name="fecha"
+                            v-validate="'required|future_date'"
+                            :error-messages="errors.first('fecha')"
+                            label="Fecha del préstamo"
+                            prepend-icon="mdi-calendar"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                        ></v-text-field>
+                    </template>
+                    <v-date-picker 
+                        :allowed-dates="allowedDates" 
+                        v-model="form.loan_date" 
+                        @input="loan_date_menu = false"
+                    ></v-date-picker>
+                </v-menu>
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
@@ -128,9 +146,7 @@ export default {
             user: {},
             user_id: null,
             form: {},
-            options: {
-                
-            }
+            loan_date_menu: false,
         }
     },
     mounted() {
@@ -152,7 +168,7 @@ export default {
                 phone: this.user.phone,
                 age: this.user.age,
                 loan_amount: 11.00,
-                loan_date: null,
+                loan_date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000 )).toISOString().substr(0, 10),
                 loan_weeks: null,
                 check: null
             }
@@ -165,6 +181,10 @@ export default {
                     console.log('algo');
                 }
             });
+        },
+        allowedDates(date){
+            // return parseInt(date.split('-')[2], 10) % 2 === 0
+            return date > (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
         }
     },
 }
