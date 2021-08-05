@@ -20,6 +20,11 @@ const routes = [
     name: 'Error',
     component: () => import('../views/Error.vue')
   },
+  {
+    path: '/success/:id',
+    name: 'Success',
+    component: () => import('../views/Success.vue')
+  },
   { 
     path: "*",
     name: '404',

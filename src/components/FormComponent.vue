@@ -225,9 +225,10 @@ export default {
             this.$validator.validateAll().then((valid) => {
                 if (valid) {
                     this.loading = true;
-                    this.$axios.post(`usears/${this.$route.params.id}`, this.form).then(response => {
+                    this.$axios.post(`users/${this.$route.params.id}`, this.form).then(response => {
                         this.loading = false;
-                        this.initForm();
+                        localStorage.setItem('user', JSON.stringify(response.data.data));
+                        this.$router.push({ path: `/success/${this.$route.params.id}` })
                     }).catch(err => {
                         if (err.response.data.status == 400 || err.response.data.status == 404) {
                             this.$router.push({ path: `/error/${this.$route.params.id}` })
