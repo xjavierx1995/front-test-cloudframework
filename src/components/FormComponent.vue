@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <v-container>
+        <h1> Formulario </h1>
         <v-form>
             <v-container class="pa-10">
             <v-row>
@@ -45,7 +46,7 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="6" sm="6" md="3">
                     <v-text-field
                         name="edad"
                         :error-messages="errors.first('edad')"
@@ -56,7 +57,7 @@
                     ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="6" sm="6" md="3">
                     <vuetify-money
                         v-validate="'required|max_value:1000|min_value:11'"
                         name="loan_amount"
@@ -72,7 +73,7 @@
                     />
                 </v-col>
 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="6" sm="6" md="3">
                     <v-menu
                         v-model="loan_date_menu"
                         :close-on-content-click="false"
@@ -102,7 +103,7 @@
                     </v-menu>
                 </v-col>
 
-                <v-col cols="12" sm="6" md="3">
+                <v-col cols="6" sm="6" md="3">
                     <v-select
                         name="semanas"
                         :error-messages="errors.first('semanas')"
@@ -120,7 +121,6 @@
                         name="terminos"
                         :error-messages="errors.first('terminos')"
                         v-validate="'required|required_true'"
-                        label="Aceptar térnimos y condiciones"
                         v-model="form.check"
                     >
                         <template v-slot:label>
@@ -148,7 +148,7 @@
             </v-container>
         </v-form>
         <ModalErrorComponent :showDialog="showErrorDialog"/>
-    </div>
+    </v-container>
 </template>
 <script>
 import ModalErrorComponent from './ModalError.vue'
@@ -186,13 +186,15 @@ export default {
         let params = {
             id: this.$route.params.id
         }
+        this.loading = true;
         this.$axios.get('users', { params }).then(response => {
             this.user = response.data.data;
+            this.loading = false;
             this.showErrorDialog = false;
             this.initForm();
         }).catch(err => {
+            this.loading = false;
             if (err.response.data.status == 400 || err.response.data.status == 404) {
-                console.log('error');
                 this.showErrorDialog = true;
             }
         })
@@ -223,12 +225,14 @@ export default {
             this.$validator.validateAll().then((valid) => {
                 if (valid) {
                     this.loading = true;
-                    this.$axios.post(`users/${this.$route.params.id}`, this.form).then(response => {
+                    this.$axios.post(`usears/${this.$route.params.id}`, this.form).then(response => {
                         this.loading = false;
                         this.initForm();
+                    }).catch(err => {
+                        if (err.response.data.status == 400 || err.response.data.status == 404) {
+                            this.$router.push({ path: `/error/${this.$route.params.id}` })
+                        }
                     })
-                }else{
-                    console.log('algo');
                 }
             });
         },

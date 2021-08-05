@@ -21,15 +21,21 @@
       </v-col>
 
     </v-row>
+    <ModalErrorComponent :showDialog="showErrorDialog"/>
   </v-container>
 </template>
 
 <script>
+  import ModalErrorComponent from './ModalError.vue'
   export default {
     name: 'HelloWorld',
+    components: {
+      ModalErrorComponent
+    },
 
     data: () => ({
-      user: {}
+      user: {},
+      showErrorDialog: false,
     }),
     mounted() {
         let params = {
@@ -37,6 +43,10 @@
         }
         this.$axios.get('users', { params }).then(response => {
             this.user = response.data.data;
+        }).catch(err => {
+            if (err.response.data.status == 400 || err.response.data.status == 404) {
+                this.showErrorDialog = true;
+            }
         })
     },
   }
