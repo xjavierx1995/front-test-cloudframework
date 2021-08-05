@@ -109,23 +109,38 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-            <v-text-field
-                name="loan_weeks"
-                :error-messages="errors.first('loan_weeks')"
-                v-validate="'required'"
-                label="Tiempo a devolver"
-                v-model="form.loan_weeks"
-            ></v-text-field>
+                <v-select
+                    name="semanas"
+                    :error-messages="errors.first('semanas')"
+                    v-validate="'required'"
+                    label="Tiempo a devolver"
+                    v-model="form.loan_weeks"
+                    :items="weeks"
+                    item-text="name"
+                    item-value="value"
+                ></v-select>
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-            <v-checkbox
-                name="check"
-                :error-messages="errors.first('check')"
-                v-validate="'required_true'"
-                label="Aceptar térnimos y condiciones"
-                v-model="form.check"
-            ></v-checkbox>
+                <v-checkbox
+                    name="terminos"
+                    :error-messages="errors.first('terminos')"
+                    v-validate="'required|required_true'"
+                    label="Aceptar térnimos y condiciones"
+                    v-model="form.check"
+                >
+                    <template v-slot:label>
+                  <div>
+                        <a
+                          target="_blank"
+                          href="https://comparte.bnext.io/privacidad"
+                          @click.stop
+                        >
+                          <u>Términos y condiciones</u>
+                        </a>
+                  </div>
+                </template>
+                </v-checkbox>
             </v-col>
 
             <v-col cols="12" sm="12" md="12" class="text-right">
@@ -145,8 +160,24 @@ export default {
         return {
             user: {},
             user_id: null,
-            form: {},
+            form: {
+                name: '',
+                surname: '',
+                email: '',
+                phone: '',
+                age: '',
+                loan_amount: 0,
+                loan_date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000 )).toISOString().substr(0, 10),
+                loan_weeks: null,
+                check: null
+            },
             loan_date_menu: false,
+            weeks: [
+                {
+                    value: 1,
+                    name: '1 semana'
+                }
+            ],
         }
     },
     mounted() {
@@ -155,7 +186,6 @@ export default {
         }
         this.$axios.get('users', { params }).then(response => {
             this.user = response.data.data;
-            console.log(this.user);
             this.initForm();
         })
     },
@@ -172,11 +202,18 @@ export default {
                 loan_weeks: null,
                 check: null
             }
+
+            for (let index = 2; index <= 20; index++) {
+                this.weeks.push({
+                    value: index,
+                    name: index + ' semanas'
+                })
+            }
         },
         submit(){
             this.$validator.validateAll().then((valid) => {
                 if (valid) {
-                /* aqui va la consulta en caso e que todo este validado */
+                    console.log('validado');
                 }else{
                     console.log('algo');
                 }
