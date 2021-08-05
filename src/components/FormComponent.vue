@@ -56,7 +56,7 @@
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-                <v-text-field
+                <!-- <v-text-field
                     name="loan_amount"
                     :error-messages="errors.first('loan_amount')"
                     v-validate="'required|numeric'"
@@ -64,7 +64,20 @@
                     v-model="form.loan_amount"
                     prefix="$"
                 >
-                </v-text-field>
+                </v-text-field> -->
+                <vuetify-money
+                    v-validate="'required|max_value:1000|min_value:11'"
+                    name="loan_amount"
+                    :error-messages="errors.first('loan_amount')"
+                    v-model="form.loan_amount"
+                    label="Importe préstamo"
+                    :options="{
+                        prefix: '$',
+                        suffix: '',
+                        length: 11,
+                        precision: 2
+                    }"
+                />
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
@@ -114,7 +127,10 @@ export default {
         return {
             user: {},
             user_id: null,
-            form: {}
+            form: {},
+            options: {
+                
+            }
         }
     },
     mounted() {
@@ -135,7 +151,7 @@ export default {
                 email: this.user.email,
                 phone: this.user.phone,
                 age: this.user.age,
-                loan_amount: null,
+                loan_amount: 11.00,
                 loan_date: null,
                 loan_weeks: null,
                 check: null
