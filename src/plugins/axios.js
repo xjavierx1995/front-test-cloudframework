@@ -9,7 +9,10 @@ import axios from "axios";
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-  baseURL: "https://api7.cloudframework.io/recruitment/fullstack/"
+  baseURL: "https://api7.cloudframework.io/recruitment/fullstack/",
+  headers:{
+    "X-WEB-KEY": 'Development'
+  }
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 };

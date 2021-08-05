@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/home/:id',
     name: 'Home',
     component: Home
   },
@@ -14,6 +14,21 @@ const routes = [
     path: '/form/:id',
     name: 'Form',
     component: () => import('../views/Form.vue')
+  },
+  {
+    path: '/error/:id',
+    name: 'Error',
+    component: () => import('../views/Error.vue')
+  },
+  {
+    path: '/success/:id',
+    name: 'Success',
+    component: () => import('../views/Success.vue')
+  },
+  { 
+    path: "*",
+    name: '404',
+    component:  () => import('../views/NotFound.vue')
   }
 ]
 

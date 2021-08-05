@@ -38,3 +38,12 @@ VeeValidate.Validator.extend("required_true", {
         return !!value;
     }
 });
+
+VeeValidate.Validator.extend("future_date", {
+    getMessage: () =>
+        `La fecha debe ser mayor a la actual`,
+    validate: value => {
+        return value > (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+        
+    }
+});

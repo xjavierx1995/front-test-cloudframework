@@ -6,18 +6,19 @@
       dark
     >
       <div class="d-flex align-center">
-        <div class="text-h6 text-uppercase"> cloud framework </div>
+
+        <router-link :to="'/home/'+$route.params.id" class="text-decoration-none text-md-h6 white--text text-uppercase">
+          cloud framework 
+        </router-link>
       </div>
 
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
+        :to="'/form/'+$route.params.id"
         text
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <span class="mr-2">Solicitar prestamo</span>
       </v-btn>
     </v-app-bar>
 
@@ -33,7 +34,8 @@ export default {
   name: 'App',
 
   data: () => ({
-    //
   }),
+  mounted() {
+  },
 };
 </script>
