@@ -66,19 +66,12 @@
                         prefix: '$',
                         suffix: '',
                         length: 11,
-                        precision: 2
+                        precision: 0
                     }"
                 />
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-                <!-- <v-text-field
-                    name="loan_date"
-                    :error-messages="errors.first('loan_date')"
-                    v-validate="'required'"
-                    label="Fecha del préstamo"
-                    v-model="form.loan_date"
-                ></v-text-field> -->
                 <v-menu
                     v-model="loan_date_menu"
                     :close-on-content-click="false"
@@ -145,7 +138,7 @@
 
             <v-col cols="12" sm="12" md="12" class="text-right">
                 <v-spacer></v-spacer>
-                <v-btn @click="submit" elevation="0" color="purple" class="white--text">
+                <v-btn @click="submit" :loading="loading" elevation="0" color="purple" class="white--text">
                     Guardar
                 </v-btn>
             </v-col>
@@ -168,16 +161,17 @@ export default {
                 age: '',
                 loan_amount: 0,
                 loan_date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000 )).toISOString().substr(0, 10),
-                loan_weeks: null,
+                loan_weeks: "",
                 check: null
             },
             loan_date_menu: false,
             weeks: [
                 {
-                    value: 1,
+                    value: '1',
                     name: '1 semana'
                 }
             ],
+            loading: false
         }
     },
     mounted() {
@@ -196,31 +190,35 @@ export default {
                 surname: this.user.surname,
                 email: this.user.email,
                 phone: this.user.phone,
-                age: this.user.age,
-                loan_amount: 11.00,
+                age: this.user.age.toString(),
+                loan_amount: 0,
                 loan_date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000 )).toISOString().substr(0, 10),
-                loan_weeks: null,
+                loan_weeks: "",
                 check: null
             }
 
             for (let index = 2; index <= 20; index++) {
                 this.weeks.push({
-                    value: index,
+                    value: index.toString(),
                     name: index + ' semanas'
                 })
             }
         },
         submit(){
+
             this.$validator.validateAll().then((valid) => {
                 if (valid) {
-                    console.log('validado');
+                    this.loading = true;
+                    this.$axios.post(`users/${this.$route.params.id}`, this.form).then(response => {
+                        this.loading = false;
+                        this.initForm();
+                    })
                 }else{
                     console.log('algo');
                 }
             });
         },
         allowedDates(date){
-            // return parseInt(date.split('-')[2], 10) % 2 === 0
             return date > (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
         }
     },

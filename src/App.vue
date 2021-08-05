@@ -7,7 +7,7 @@
     >
       <div class="d-flex align-center">
 
-        <router-link :to="'/home/'+client_id" class="text-decoration-none text-h6 white--text text-uppercase">
+        <router-link :to="'/home/'+$route.params.id" class="text-decoration-none text-md-h6 white--text text-uppercase">
           cloud framework 
         </router-link>
       </div>
@@ -15,11 +15,10 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        :to="'/form/'+client_id"
+        :to="'/form/'+$route.params.id"
         text
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <span class="mr-2">Solicitar prestamo</span>
       </v-btn>
     </v-app-bar>
 
@@ -35,10 +34,8 @@ export default {
   name: 'App',
 
   data: () => ({
-    client_id: null
   }),
   mounted() {
-    this.client_id = this.$route.params.id
   },
 };
 </script>
