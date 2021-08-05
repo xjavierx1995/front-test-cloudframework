@@ -3,64 +3,68 @@
         <v-container class="pa-10">
         <v-row>
             <v-col cols="12" sm="6" md="3">
-            <v-text-field
-                name="name"
-                :error-messages="errors.first('name')"
-                v-validate="'required'"
-                label="Nombre"
-                v-model="form.name"
-                readonly
-            ></v-text-field>
+                <v-text-field
+                    name="name"
+                    :error-messages="errors.first('name')"
+                    v-validate="'required'"
+                    label="Nombre"
+                    v-model="form.name"
+                    readonly
+                ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="3">
-            <v-text-field
-                name="surname"
-                :error-messages="errors.first('surname')"
-                v-validate="'required'"
-                label="Apellido"
-                v-model="form.surname"
-                readonly
-            ></v-text-field>
+                <v-text-field
+                    name="surname"
+                    :error-messages="errors.first('surname')"
+                    v-validate="'required'"
+                    label="Apellido"
+                    v-model="form.surname"
+                    readonly
+                ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="3">
-            <v-text-field
-                name="email"
-                :error-messages="errors.first('email')"
-                v-validate="'required|email'"
-                label="Email"
-                v-model="form.email"
-                readonly
-            ></v-text-field>
+                <v-text-field
+                    name="email"
+                    :error-messages="errors.first('email')"
+                    v-validate="'required|email'"
+                    label="Email"
+                    v-model="form.email"
+                    readonly
+                ></v-text-field>
             </v-col>
             
             <v-col cols="12" sm="6" md="3">
-            <v-text-field
-                name="phone"
-                :error-messages="errors.first('phone')"
-                v-validate="'required'"
-                label="Teléfono"
-                v-model="form.phone"
-            ></v-text-field>
+                <v-text-field
+                    name="teléfono"
+                    :error-messages="errors.first('teléfono')"
+                    v-validate="'required|numeric|max:25'"
+                    label="Teléfono"
+                    v-model="form.phone"
+                    type="number"
+                ></v-text-field>
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-            <v-text-field
-                name="age"
-                :error-messages="errors.first('age')"
-                v-validate="'required'"
-                label="Edad"
-                v-model="form.age"
-            ></v-text-field>
+                <v-text-field
+                    name="edad"
+                    :error-messages="errors.first('edad')"
+                    v-validate="'required|numeric|max:3|max_value:100'"
+                    label="Edad"
+                    v-model="form.age"
+                    type="number"
+                ></v-text-field>
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
-            <v-text-field
-                name="loan_amount"
-                :error-messages="errors.first('loan_amount')"
-                v-validate="'required'"
-                label="Importe prestamo"
-                v-model="form.loan_amount"
-            ></v-text-field>
+                <v-text-field
+                    name="loan_amount"
+                    :error-messages="errors.first('loan_amount')"
+                    v-validate="'required|numeric'"
+                    label="Importe prestamo"
+                    v-model="form.loan_amount"
+                    prefix="$"
+                >
+                </v-text-field>
             </v-col>
 
             <v-col cols="12" sm="6" md="3">
@@ -149,3 +153,11 @@ export default {
     },
 }
 </script>
+<style>
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+    input[type=number] { -moz-appearance:textfield; }
+</style>
