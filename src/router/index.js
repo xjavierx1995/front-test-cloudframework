@@ -14,6 +14,11 @@ const routes = [
     path: '/form/:id',
     name: 'Form',
     component: () => import('../views/Form.vue')
+  },
+  { 
+    path: "*",
+    name: '404',
+    component:  () => import('../views/NotFound.vue')
   }
 ]
 
