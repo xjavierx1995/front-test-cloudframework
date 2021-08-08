@@ -5,6 +5,14 @@
 yarn install
 ```
 
+## Documentación
+
+```
+cd docs 
+
+yarn docs:dev
+```
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve

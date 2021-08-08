@@ -74,7 +74,7 @@
                                     <div class="font-weight-normal">
                                     <strong>Tiempo para pagar</strong>
                                     </div>
-                                    <div>{{ user_info.loan_weeks }}</div>
+                                    <div>{{ user_info.loan_weeks }} semanas</div>
                                 </div>
                             </v-timeline-item>
                         </v-timeline>
@@ -94,7 +94,6 @@ export default {
     },
     mounted() {
         this.user_info = JSON.parse(localStorage.getItem('user'));
-        console.log(this.user_info);
     },
 }
 </script>
