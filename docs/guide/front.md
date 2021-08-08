@@ -1,7 +1,7 @@
-# Documentación
+# Documentación Front
 
 ::: warning Nota de advertencia de compatibilidad
-El proyecto se realizo con la version 12.5.0 de node
+El proyecto se realizo con la version 1.22.4 de yarn
 :::
 
 ## Rutas
