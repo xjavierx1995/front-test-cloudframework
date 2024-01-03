@@ -1,5 +1,13 @@
 # front-test-cloudframework
 
+## Demo
+```
+https://cloudframework-1c13d.web.app/#/1
+```
+## Doc
+```
+https://cloudframework-doc.firebaseapp.com/
+```
 ## Project setup
 ```
 yarn install
